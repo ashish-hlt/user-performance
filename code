@@ -1,0 +1,32 @@
+from patsy import dmatrices
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+import statsmodels.discrete.discrete_model as sm
+import seaborn as sns
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+# read in the data & create matrices
+df = pd.read_csv("file destination")
+
+"""
+df
+g=sns.FacetGrid(df,col="C")
+g.map(plt.hist, "C", bins=100)
+y, X = dmatrices('Pass ~ C', df, return_type = 'dataframe')
+result = logit.fit()
+print(result.summary())
+"""
+
+m = sns.lmplot(x="C", y="Pass", data=df, logistic=True, y_jitter=.05)
+
+y, X = dmatrices('Pass ~ C + Que', df, return_type = 'dataframe')
+model = LogisticRegression(fit_intercept = False, C = 1e9)
+mdl = model.fit(X, y)
+model.coef_
+
+# sm
+logit = sm.Logit(y, X)
+logit.fit().params
+result = logit.fit()
+print(result.summary())
