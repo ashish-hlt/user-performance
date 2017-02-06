@@ -8,6 +8,16 @@ import matplotlib.pyplot as plt
 
 # read in the data & create matrices
 df = pd.read_csv("C:\Users\TEAM-HLT\Google Drive\HLT\DATA REQUESTS\Catherine\Regression.csv")
+# THIS FILE has 3 columns - 
+#"Pass" (Column 1) with values 0 or 1  
+#"C" (Column 2- %correct) with values ranging 0 to 1
+#"Que" (Column 3- no. of items attempted) with int. values 
+
+m = sns.lmplot(x="C", y="Pass", data=df, logistic=True, y_jitter=.05)
+#main formula used for creating a graph to find the probability of passing
+#may-be we can use this to further create a table with an interval of 0.1 between 0 and 1 to use for further calculations
+
+#################################
 
 """
 df
@@ -17,8 +27,6 @@ y, X = dmatrices('Pass ~ C', df, return_type = 'dataframe')
 result = logit.fit()
 print(result.summary())
 """
-
-m = sns.lmplot(x="C", y="Pass", data=df, logistic=True, y_jitter=.05)
 
 y, X = dmatrices('Pass ~ C + Que', df, return_type = 'dataframe')
 model = LogisticRegression(fit_intercept = False, C = 1e9)
